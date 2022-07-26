@@ -12,4 +12,4 @@ workflows:
           config-path: .circleci/continue_config.yml
           base-revision: main
           mapping: |
-            hello/.* run-hello true
+            hello-world-p/.* run-hello-world-p true
