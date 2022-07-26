@@ -11,9 +11,25 @@ parameters:
     type: boolean
     default: false
 
+jobs:
+  validate-orb:
+    docker:
+      - image: cimg/python:3.9
+    description: Validate an orb
+    parameters:
+      path:
+        type: string
+        description: The path to the orb
+    steps:
+      - checkout
+      - run:
+          name: Validate orb
+          command: |
+            circleci orb validate << parameters.path >>/orb.yml
 
 workflows:
   hello-world-p:
     when: << pipeline.parameters.run-hello-world-p >>
     jobs:
-      - orb-tools/lint
+      - validate-orb:
+          path: hello-world-p
