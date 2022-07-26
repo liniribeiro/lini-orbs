@@ -21,7 +21,8 @@ jobs:
       - checkout
       - run:
           name: Validate orb
-          command: circleci orb validate << parameters.path >>/orb.yml
+          command: | 
+            circleci orb validate << parameters.path >>/orb.yml
 
 #  publish-orb:
 #    docker:
