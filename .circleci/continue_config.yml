@@ -16,5 +16,4 @@ workflows:
   hello-world-p:
     when: << pipeline.parameters.run-hello-world-p >>
     jobs:
-      - orb-tools/lint:
-          source-dir: ./hello-world-p/
+      - orb-tools/lint
