@@ -11,27 +11,10 @@ parameters:
     type: boolean
     default: false
 
-#  publish-orb:
-#    docker:
-#      - image: cimg/python:3.9
-#    parameters:
-#      path:
-#        type: string
-#        description: The path to the orb
-#    steps:
-#      - checkout
-#      - run:
-#          name: publish dev orb
-#          command: |
-#             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@dev:first
 
 workflows:
-  hello:
+  hello-world-p:
     when: << pipeline.parameters.run-hello-world-p >>
     jobs:
       - orb-tools/lint:
           filters: << parameters.path >>
-#      - publish-orb:
-#          path: hello
-#          requires:
-#            - validate-orb
