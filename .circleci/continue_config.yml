@@ -3,7 +3,7 @@ version: 2.1
 # Reuse a common job for publishing each orb
 
 parameters:
-  run-hello:
+  run-hello-world-p:
     type: boolean
     default: false
 
@@ -27,21 +27,24 @@ jobs:
   publish-orb:
     docker:
       - image: cimg/python:3.9
+    parameters:
+      path:
+        type: string
+        description: The path to the orb
     steps:
       - checkout
-
       - run:
           name: publish dev orb
           command: |
              circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@dev:first
 
 workflows:
-  hello:
-    when: << pipeline.parameters.run-hello >>
+  hello-world-p:
+    when: << pipeline.parameters.run-hello-world-p >>
     jobs:
       - validate-orb:
-          path: hello
+          path: hello-world-p
       - publish-orb:
-          path: hello
+          path: hello-world-p
           requires:
             - validate-orb
