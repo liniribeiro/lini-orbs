@@ -24,19 +24,19 @@ jobs:
           command: |
             circleci orb validate << parameters.path >>/orb.yml
 
-#  publish-orb:
-#    docker:
-#      - image: cimg/python:3.9
-#    parameters:
-#      path:
-#        type: string
-#        description: The path to the orb
-#    steps:
-#      - checkout
-#      - run:
-#          name: publish dev orb
-#          command: |
-#             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@dev:first
+  publish-orb:
+    docker:
+      - image: cimg/python:3.9
+    parameters:
+      path:
+        type: string
+        description: The path to the orb
+    steps:
+      - checkout
+      - run:
+          name: publish dev orb
+          command: |
+             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@dev:first
 
 workflows:
   hello:
@@ -44,7 +44,7 @@ workflows:
     jobs:
       - validate-orb:
           path: hello-world-p
-#      - publish-orb:
-#          path: hello
-#          requires:
-#            - validate-orb
+      - publish-orb:
+          path: hello
+          requires:
+            - validate-orb
