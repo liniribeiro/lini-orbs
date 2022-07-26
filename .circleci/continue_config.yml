@@ -43,7 +43,7 @@ workflows:
     when: << pipeline.parameters.run-hello >>
     jobs:
       - validate-orb:
-          path: hello-world-p
+          path: hello
       - publish-orb:
           path: hello
           requires:
