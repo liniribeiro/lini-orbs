@@ -1,29 +1,15 @@
 version: 2.1
+setup: true
 
-# Reuse a common job for publishing each orb
+
+orbs:
+  orb-tools: circleci/orb-tools@11.1
+  shellcheck: circleci/shellcheck@3.1
 
 parameters:
   run-hello-world-p:
     type: boolean
     default: false
-
-
-jobs:
-  validate-orb:
-    description: Validate an orb
-    parameters:
-      path:
-        type: string
-        description: The path to the orb
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - checkout
-      - run:
-          name: Validate orb
-          command: |
-            set -e
-            circleci orb validate << parameters.path >>/orb.yml
 
 #  publish-orb:
 #    docker:
@@ -43,8 +29,8 @@ workflows:
   hello:
     when: << pipeline.parameters.run-hello-world-p >>
     jobs:
-      - validate-orb:
-          path: hello-world-p
+      - orb-tools/lint:
+          filters: << parameters.path >>
 #      - publish-orb:
 #          path: hello
 #          requires:
