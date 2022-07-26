@@ -3,7 +3,7 @@ version: 2.1
 # Reuse a common job for publishing each orb
 
 parameters:
-  run-hello-world-p:
+  run-hello:
     type: boolean
     default: false
 
@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: Validate orb
-          command: | 
+          command: |
             circleci orb validate << parameters.path >>/orb.yml
 
 #  publish-orb:
@@ -39,12 +39,12 @@ jobs:
 #             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@dev:first
 
 workflows:
-  hello-world-p:
-    when: << pipeline.parameters.run-hello-world-p >>
+  hello:
+    when: << pipeline.parameters.run-hello >>
     jobs:
       - validate-orb:
           path: hello-world-p
 #      - publish-orb:
-#          path: hello-world-p
+#          path: hello
 #          requires:
 #            - validate-orb
