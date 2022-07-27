@@ -21,22 +21,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Adding Permission
-          command: |
-            sudo chown -R circleci:circleci /usr/local/
-      - run:
           name: Install circleci
           command: |
+            sudo chown -R circleci:circleci /usr/local/
             curl https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh --fail --show-error | bash
       - run:
           name: Validate orb
           command: |
             circleci orb validate << parameters.path >>/orb.yml
 
-      - save_cache:
-          key: repo-{{.Environment.CIRCLE_SHA1}}
-          paths:
-             - "/usr/local/"
 
   publish-orb:
     working_directory: ~/listicle
@@ -48,9 +41,11 @@ jobs:
         description: The path to the orb
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - repo-{{.Environment.CIRCLE_SHA1}}
+      - run:
+          name: Install circleci
+          command: |
+            sudo chown -R circleci:circleci /usr/local/
+            curl https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh --fail --show-error | bash
       - run:
           name: publish dev orb
           command: |
