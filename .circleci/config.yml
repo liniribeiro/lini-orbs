@@ -36,7 +36,7 @@ jobs:
       - save_cache:
           key: repo-{{.Environment.CIRCLE_SHA1}}
           paths:
-             - "/usr/local/bin"
+             - "/usr/local/"
 
   publish-orb:
     working_directory: ~/listicle
