@@ -33,8 +33,25 @@ jobs:
           command: |
             circleci orb validate << parameters.path >>/orb.yml
 
+  publish-orb:
+    working_directory: ~/listicle
+    docker:
+      - image: cimg/python:3.9
+    parameters:
+      path:
+        type: string
+        description: The path to the orb
+    steps:
+      - checkout
+
+      - run:
+          name: publish dev orb
+          command: |
+             circleci orb publish << parameters.path >>/orb.yml launchpotato/<< parameters.path >>@dev:first
 workflows:
   hello-world-p:
     jobs:
       - validate-orb:
+          path: hello-world-p
+      - publish-orb:
           path: hello-world-p
