@@ -63,7 +63,9 @@ jobs:
                     circleci orb publish << parameters.path >>/orb.yml "$VERSION" --token "$CIRCLE_TOKEN"
                 else
                   echo "$VERSION is already published"
+                fi
             fi
+
 workflows:
   hello-world-p:
     when: << pipeline.parameters.run-hello >>
