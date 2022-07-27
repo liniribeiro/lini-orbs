@@ -54,7 +54,7 @@ jobs:
           name: publish dev orb
           command: |
             echo "1"
-            if [[ -f "<< parameters.path >>orb_version.txt" ]]; then
+            if [[ -f "<< parameters.path >>/orb_version.txt" ]]; then
                 echo "2"
                 # This is a specific version
                 VERSION=$(<"<< parameters.path >>/orb_version.txt")
