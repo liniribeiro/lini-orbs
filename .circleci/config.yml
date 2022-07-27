@@ -33,6 +33,11 @@ jobs:
           command: |
             circleci orb validate << parameters.path >>/orb.yml
 
+      - save_cache:
+          key: repo-{{.Environment.CIRCLE_SHA1}}
+          paths:
+            ~/xanana
+
   publish-orb:
     working_directory: ~/listicle
     docker:
@@ -43,11 +48,14 @@ jobs:
         description: The path to the orb
     steps:
       - checkout
-
+      - restore_cache:
+          keys:
+            - repo-{{.Environment.CIRCLE_SHA1}}
       - run:
           name: publish dev orb
           command: |
              circleci orb publish << parameters.path >>/orb.yml launchpotato/<< parameters.path >>@dev:first
+
 workflows:
   hello-world-p:
     jobs:
