@@ -55,10 +55,10 @@ jobs:
           command: |
             echo "1"
             if [[ -f "<< parameters.path >>/orb_version.txt" ]]; then
-                echo "2"
                 # This is a specific version
                 VERSION=$(<"<< parameters.path >>/orb_version.txt")
-                CURRENT_VERSION=$(circleci orb info potato/<< parameters.path >> | grep "Latest" | cut -d' ' -f2)
+                echo "version: $VERSION"
+                CURRENT_VERSION=$(circleci orb info potato/<< parameters.path >> --token "$CIRCLE_TOKEN" | grep "Latest" | cut -d' ' -f2)
                 if [[ "$VERSION" != "$CURRENT_VERSION" ]]; then
                     circleci orb publish << parameters.path >>/orb.yml "$VERSION" --token "$CIRCLE_TOKEN"
                 else
