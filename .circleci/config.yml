@@ -24,7 +24,6 @@ jobs:
           name: Adding Permission
           command: |
             sudo chown -R circleci:circleci /usr/local/
-            sudo chown -R circleci:circleci /usr/local/bin/circleci
       - run:
           name: Install circleci
           command: |
