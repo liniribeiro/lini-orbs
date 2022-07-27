@@ -4,60 +4,12 @@ setup: true
 
 orbs:
   path-filtering: circleci/path-filtering@0.1.3
-  orb-tools: circleci/orb-tools@11.2.0
-  shellcheck: circleci/shellcheck@3.1
-
-
-jobs:
-  validate-orb:
-    working_directory: ~/xanana
-    docker:
-      - image: cimg/python:3.9
-    description: Validate an orb
-    parameters:
-      path:
-        type: string
-        description: The path to the orb
-    steps:
-      - checkout
-      - run:
-          name: Install circleci
-          command: |
-            sudo chown -R circleci:circleci /usr/local/
-            curl https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh --fail --show-error | bash
-      - run:
-          name: Validate orb
-          command: |
-            circleci orb validate << parameters.path >>/orb.yml
-
-
-  publish-orb:
-    working_directory: ~/listicle
-    docker:
-      - image: cimg/python:3.9
-    parameters:
-      path:
-        type: string
-        description: The path to the orb
-    steps:
-      - checkout
-      - run:
-          name: Install circleci
-          command: |
-            sudo chown -R circleci:circleci /usr/local/
-            curl https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh --fail --show-error | bash
-      - run:
-          name: publish dev orb
-          command: |
-             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@0.0.2 --token $CIRCLE_TOKEN
 
 workflows:
-  hello-world-p:
+  setup-workflow:
     jobs:
-      - validate-orb:
-          path: hello-world-p
-      - publish-orb:
-          path: hello-world-p
-          requires:
-           - validate-orb
-          context: orb-publishing
+      - path-filtering/filter:
+          config-path: .circleci/continue_config.yml
+          base-revision: main
+          mapping: |
+            hello-world-p/.* run-hello true
