@@ -49,7 +49,7 @@ jobs:
       - run:
           name: publish dev orb
           command: |
-             circleci orb publish << parameters.path >>/orb.yml launchpotato/<< parameters.path >>@dev:first --token "$CIRCLE_TOKEN"
+             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@dev:first --token "$CIRCLE_TOKEN"
 
 workflows:
   hello-world-p:
