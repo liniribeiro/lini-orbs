@@ -63,3 +63,5 @@ workflows:
           path: hello-world-p
       - publish-orb:
           path: hello-world-p
+          requires:
+           - validate-orb
