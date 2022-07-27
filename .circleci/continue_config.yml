@@ -53,8 +53,15 @@ jobs:
       - run:
           name: publish dev orb
           command: |
-             circleci orb publish << parameters.path >>/orb.yml potato/<< parameters.path >>@0.0.2 --token $CIRCLE_TOKEN
-
+            if [[ -f "<< parameters.path >>orb_version.txt" ]]; then
+                # This is a specific version
+                VERSION=$(<"<< parameters.path >>/orb_version.txt")
+                CURRENT_VERSION=$(circleci orb info potato/<< parameters.path >> | grep "Latest" | cut -d' ' -f2)
+                if [[ "$VERSION" != "$CURRENT_VERSION" ]]; then
+                    circleci orb publish << parameters.path >>/orb.yml $VERSION --token $CIRCLE_TOKEN
+                else
+                  echo "$VERSION is already published"
+            fi
 workflows:
   hello-world-p:
     when: << pipeline.parameters.run-hello >>
