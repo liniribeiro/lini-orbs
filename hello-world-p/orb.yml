@@ -2,7 +2,7 @@ version: 2.1
 description: A greeting command orb
 commands:
  greet:
-     description: Greet someone with a "hello".
+     description: Greet someone with a "hello xanana teste alini".
      parameters:
          to:
              type: string
