@@ -36,7 +36,7 @@ jobs:
 
 
   publish-orb:
-    working_directory: ~/listicle
+    working_directory: ~/app
     docker:
       - image: cimg/python:3.9
     parameters:
@@ -51,7 +51,7 @@ jobs:
             sudo chown -R circleci:circleci /usr/local/
             curl https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh --fail --show-error | bash
       - run:
-          name: publish dev orb
+          name: publish orb
           command: |
             echo "1"
             if [[ -f "<< parameters.path >>/orb_version.txt" ]]; then
