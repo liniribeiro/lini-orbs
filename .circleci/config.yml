@@ -13,3 +13,4 @@ workflows:
           base-revision: main
           mapping: |
             hello-world-p/.* run-hello true
+            packages/.* run-packages true
