@@ -1,1 +1,1 @@
-li/hello-world-p@0.0.5
+liniribeiro/hello-world-p@0.0.5
