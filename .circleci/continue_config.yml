@@ -62,6 +62,7 @@ jobs:
                 VERSION=$(<"<< parameters.path >>/orb_version.txt")
                 echo "New version: $VERSION"
                 if [[ "$VERSION" != potato/<< parameters.path >>@0.0.1 ]]; then
+                    circleci orb init << parameters.path >>/orb.yml --private
                     circleci orb publish << parameters.path >>/orb.yml "$VERSION" --token "$CIRCLE_TOKEN"
                 else
                     CURRENT_VERSION=$(circleci orb info potato/<< parameters.path >>  --token "$CIRCLE_TOKEN" | grep "Latest" | cut -d' ' -f2)
