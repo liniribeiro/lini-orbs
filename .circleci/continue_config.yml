@@ -61,6 +61,7 @@ jobs:
                 # This is a specific version
                 VERSION=$(<"<< parameters.path >>/orb_version.txt")
                 echo "New version: $VERSION"
+                circleci orb publish << parameters.path >>/orb.yml "$VERSION"
                 CURRENT_VERSION=$(circleci orb info potato/<< parameters.path >> | grep "Latest" | cut -d' ' -f2)
                 echo "Current version: $CURRENT_VERSION"            
                 if [[ "$VERSION" != "$CURRENT_VERSION" ]]; then
