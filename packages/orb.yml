@@ -1,5 +1,5 @@
 version: 2.1
-description: A greeting command orb
+description: A orb to help deploy packages to pipy
 commands:
   poetry-build:
     parameters:

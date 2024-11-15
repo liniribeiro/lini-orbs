@@ -17,7 +17,7 @@ parameters:
 
 jobs:
   validate-orb:
-    working_directory: ~/xanana
+    working_directory: ~/app
     docker:
       - image: cimg/python:3.9
     description: Validate an orb
@@ -60,8 +60,9 @@ jobs:
             if [[ -f "<< parameters.path >>/orb_version.txt" ]]; then
                 # This is a specific version
                 VERSION=$(<"<< parameters.path >>/orb_version.txt")
-                echo "version: $VERSION"
+                echo "New version: $VERSION"
                 CURRENT_VERSION=$(circleci orb info potato/<< parameters.path >> --token "$CIRCLE_TOKEN" | grep "Latest" | cut -d' ' -f2)
+                echo "Current version: $CURRENT_VERSION"            
                 if [[ "$VERSION" != "$CURRENT_VERSION" ]]; then
                     circleci orb publish << parameters.path >>/orb.yml "$VERSION" --token "$CIRCLE_TOKEN"
                 else
