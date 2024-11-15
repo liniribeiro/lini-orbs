@@ -80,7 +80,7 @@ workflows:
           path: hello-world-p
           requires:
            - validate-orb
-          context: orb-publishing
+          context: orb-publish
 
   packages:
     when: << pipeline.parameters.run-packages >>
@@ -91,4 +91,4 @@ workflows:
           path: packages
           requires:
            - validate-orb
-          context: orb-publishing
+          context: orb-publish
